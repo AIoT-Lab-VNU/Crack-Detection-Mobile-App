@@ -5,24 +5,23 @@ from kivy.properties import ObjectProperty
 from kivy.lang import Builder
 from kivy.uix.screenmanager import Screen, ScreenManager, NoTransition
 from kivy.uix.camera import Camera
+from kivy.uix.popup import Popup
 import torch
 import cv2
 import numpy as np
-from PIL import Image
+from PIL import Image as PILImage
+from kivy.uix.image import Image
 import torchvision.transforms as transforms
-from torchvision.models.detection import (
-    fasterrcnn_resnet50_fpn_v2,
-    FasterRCNN_ResNet50_FPN_V2_Weights,
-)
 from model import DetectNet
+from ultralytics import YOLO
+import os
 
 # Loading pretrained model
-weights = FasterRCNN_ResNet50_FPN_V2_Weights.DEFAULT
-object_model = fasterrcnn_resnet50_fpn_v2(weights=weights)
-save_detect = "detect.jpg"
+yolo = YOLO("weights/best.pt")
+save_dir = "detect.png"
 
 # Instantiate model
-model = DetectNet(object_model, weights=weights, save_name=save_detect)
+model = DetectNet(yolo, save_name=save_dir)
 
 
 class Header(Widget):
@@ -44,6 +43,7 @@ class CrackContainer1(Screen):
 class CrackContainer2(Screen):
     start_cam = ObjectProperty(None)
     close_cam = ObjectProperty(None)
+    detect_img = ObjectProperty(None)
 
     def capture(self):
         print("Captured!")
@@ -54,17 +54,22 @@ class CrackContainer2(Screen):
         size = camera.texture.size
 
         # Convert image to Tensor
-        image = Image.frombuffer(mode="RGBA", size=size, data=raw)
+        image = PILImage.frombuffer(mode="RGBA", size=size, data=raw)
         image = image.convert("RGB")
-        # transform = transforms.Compose([(transforms.ToTensor())])
-        # tensor_img = transform(np.array(image))
-        # tensor_img = tensor_img.to(torch.uint8)
-        # tensor_img = tensor_img.permute(1, 2, 0).numpy()
-        image = np.transpose(np.array(image), (2, 0, 1))
-        image = torch.from_numpy(image).to(torch.uint8)
+        image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
 
         # Detect and save
         model(image)
+
+        # Display the detected image on the screen
+        detected_image = self.ids["detect_img"]
+        detected_image.source = save_dir
+
+    def remove_img(self):
+        detected_image = self.ids["detect_img"]
+        detected_image.nocache = True
+        detected_image.source = ""
+
 
 
 class CrackApp(App):

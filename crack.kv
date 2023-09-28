@@ -31,15 +31,11 @@
             size: root.width, dp(80)
 
 <OpenCamera>:
-    resolution: (480, 360)
+    resolution: (300, 400)
     play: False
     #keep_ratio: True
-    pos_hint:{"x":-0.3, "top":0.96}
+    pos_hint:{"x":-0.4, "y":0.08}
 
-
-#ScreenManager:
-    #CrackContainer1:
-    #CrackContainer2:
 
 <CrackContainer1>:
     name: "first"
@@ -52,11 +48,9 @@
             pos: self.pos
             size: self.size
 
-    # Header:
-    #     top: root.top
-    #     size: root.width, dp(80)
 
     RelativeLayout:
+        orientation:"vertical"
         size: root.width, self.height
         Header:
             top: root.top
@@ -67,7 +61,6 @@
             top: root.top
             size_hint_y: None
             height: dp(67)
-            #center_x: root.width / 2
             source: 'logo.png'
 
         Label:
@@ -81,7 +74,6 @@
             halign: 'left'
             valign: 'top'
             padding: 10, 0
-
 
         OpenCamera:
             id: camera
@@ -95,11 +87,10 @@
             text: 'Open Camera'
             on_press:
                 self.opacity = 0.5
-                #camera.play = not camera.play
             on_release:
+                self.opacity = 1
                 app.root.get_screen("second").ids.camera.play = True
                 app.root.current = 'second'
-                self.opacity = 1
 
 
             size_hint: None, None
@@ -113,6 +104,7 @@
     name: "second"
     close_cam: close_cam
     start_cam: start_cam
+    detect_img: detect_img
 
     canvas.before:
         Color:
@@ -121,8 +113,13 @@
             pos: self.pos
             size: self.size
 
+    Image:
+        id: detect_img
+        pos_hint: {"center_x":0.1, "y":-0.3}
+
 
     RelativeLayout:
+        orientation:"vertical"
         size: root.width, self.height
         Header:
             top: root.top
@@ -146,6 +143,7 @@
             halign: 'left'
             valign: 'top'
             padding: 10, 0
+
 
         OpenCamera:
             id: camera
@@ -170,11 +168,14 @@
                 camera.play = False
                 self.opacity = 1
                 root.manager.current = 'first'
+                root.remove_img()
             size_hint: None, None
             size: dp(142), dp(48)
             color: 1, 1, 1, 1
             pos: root.x + 10, self.y
 
+
+        #Capture Button
         RoundedButton:
             canvas.before:
                 Color:
@@ -184,16 +185,18 @@
 			        pos: self.pos
             radius: 15
             id: start_cam
-            top: root.top - 700
+            top: root.top - 520
             text: 'Capture Image'
             bold: True
             on_press: self.opacity = 0.5
             on_release:
                 self.opacity = 1
+                camera.play = False
                 root.capture()
             size_hint: None, None
             size: dp(142), dp(48)
             color: 1, 1, 1, 1
             pos: root.x + 10, self.y
+
 
 

@@ -1,55 +1,44 @@
 import torch
 import cv2
 import numpy as np
-from torchvision.models.detection import (
-    fasterrcnn_resnet50_fpn_v2,
-    FasterRCNN_ResNet50_FPN_V2_Weights,
-)
 from torchvision.io import read_image
 from PIL import Image
 import torchvision.transforms as transforms
 from torchvision.utils import draw_bounding_boxes
 from torchvision.transforms.functional import to_pil_image
 import torch.nn as nn
+from ultralytics import YOLO
 
 
 class DetectNet(nn.Module):
-    def __init__(self, object_model, weights, save_name):
+    def __init__(self, model, save_name):
         super().__init__()
-        self.object_model = object_model
-        self.weights = weights
+        self.model = model
         self.save_name = save_name
 
     def forward(self, img):
-        # Inference
-        self.object_model.eval()
-
-        # Preprocess
-        preprocess = self.weights.transforms()
-        image = [preprocess(img)]
 
         # Prediction
-        prediction = self.object_model(image)[0]
-        labels = [self.weights.meta["categories"][i] for i in prediction["labels"]]
-        box = draw_bounding_boxes(
-            img, boxes=prediction["boxes"], labels=labels, colors="red", width=4
-        )
+        prediction = self.model(img)
+        detect_img = prediction[0].plot()
 
-        im = to_pil_image(box.detach())
-        im = Image.fromarray(np.array(im))
-        im.save(self.save_name)
+        # Save detected image
+        cv2.imwrite(self.save_name, detect_img)
 
 
 if __name__ == "__main__":
-    print("")
-    # weights = FasterRCNN_ResNet50_FPN_V2_Weights.DEFAULT
-    # object_model = fasterrcnn_resnet50_fpn_v2(weights=weights)
-    # save_dir = "test.png"
-    #
-    # model = DetectNet(object_model, weights=weights, save_name=save_dir)
-    #
-    # imgs = "several_box.jpg"
-    # img = read_image(imgs)
-    # img = img[:3]
-    #
-    # model(img)
+    print("Test")
+    #img = "crack2.jpg"
+
+    # Load pretrained model
+    #yolo = YOLO("weights/best.pt")
+    #save_dir = "detect_crack.png"
+
+    # Instantiate model
+    #model = DetectNet(yolo, save_name=save_dir)
+
+    # Predict image
+    #image = cv2.imread(img)
+
+    # Predict & Save
+    #model(image)
