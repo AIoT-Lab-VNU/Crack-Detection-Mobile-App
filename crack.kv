@@ -1,5 +1,3 @@
-#:kivy 2.2.1
-
 <RoundedButton@Button>:
 	background_color: (0,0,0,0)
 	background_normal: ''
@@ -34,7 +32,7 @@
     resolution: (300, 400)
     play: False
     #keep_ratio: True
-    pos_hint:{"x":-0.4, "y":0.08}
+    pos_hint:{"x":-0.4, "y":0.09}
 
 
 <CrackContainer1>:
@@ -105,6 +103,7 @@
     close_cam: close_cam
     start_cam: start_cam
     detect_img: detect_img
+    report: report
 
     canvas.before:
         Color:
@@ -113,9 +112,11 @@
             pos: self.pos
             size: self.size
 
+
+    #Detected image
     Image:
         id: detect_img
-        pos_hint: {"center_x":0.1, "y":-0.3}
+        pos_hint: {"center_x":0.1, "y":-0.27}
 
 
     RelativeLayout:
@@ -131,6 +132,15 @@
             height: dp(67)
             #center_x: root.width / 2
             source: 'logo.png'
+
+        #Result detected on screen (area, score)
+        Label:
+            id: report
+            font_size: 20
+            halign: "left"
+            valign: "bottom"
+            color: 0, 0, 0, 1
+            pos_hint: {"x": 0.1, "y":0.1}
 
         Label:
             top: root.top - 120
@@ -159,7 +169,7 @@
 			        pos: self.pos
             radius: 15
             id: close_cam
-            top: root.top - 180
+            top: root.top - 160
             text: 'Close camera'
             bold: True
             on_press:
@@ -185,7 +195,7 @@
 			        pos: self.pos
             radius: 15
             id: start_cam
-            top: root.top - 520
+            top: root.top - 500
             text: 'Capture Image'
             bold: True
             on_press: self.opacity = 0.5
@@ -197,6 +207,7 @@
             size: dp(142), dp(48)
             color: 1, 1, 1, 1
             pos: root.x + 10, self.y
+
 
 
 

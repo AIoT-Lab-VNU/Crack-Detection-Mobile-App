@@ -44,6 +44,7 @@ class CrackContainer2(Screen):
     start_cam = ObjectProperty(None)
     close_cam = ObjectProperty(None)
     detect_img = ObjectProperty(None)
+    report = ObjectProperty(None)
 
     def capture(self):
         print("Captured!")
@@ -52,6 +53,7 @@ class CrackContainer2(Screen):
         camera = self.ids["camera"]
         raw = camera.texture.pixels
         size = camera.texture.size
+        print(size)
 
         # Convert image to Tensor
         image = PILImage.frombuffer(mode="RGBA", size=size, data=raw)
@@ -59,17 +61,48 @@ class CrackContainer2(Screen):
         image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
 
         # Detect and save
-        model(image)
+        result = model(image)
 
         # Display the detected image on the screen
         detected_image = self.ids["detect_img"]
         detected_image.source = save_dir
+
+        # Print out result
+        report = self.ids["report"]
+
+        if len(result) == 0:
+            report.text = "No crack found"
+        elif len(result) == 1:
+            area, score = result[0]
+            print(area, score)
+            report.text = (
+                f"Crack predicted accuracy: "
+                + "%.2f" % score
+                + " %\nThe area of crack is: "
+                + "%.2f" % area
+                + " cm²"
+            )
+        else:
+            text = ""
+            for i, out in enumerate(result):
+                area, score = out
+                text += (
+                    f"Crack {i+1} predicted accuracy: "
+                    + "%.2f" % score
+                    + f" %\nThe area of crack {i+1} is: "
+                    + "%.2f" % area
+                    + " cm²\n\n"
+                )
+            report.text = text
 
     def remove_img(self):
         detected_image = self.ids["detect_img"]
         detected_image.nocache = True
         detected_image.source = ""
 
+
+class CrackContainer3(Screen):
+    pass
 
 
 class CrackApp(App):
