@@ -39,7 +39,7 @@ class DetectNet(nn.Module):
         out = []
         for box in boxes:
             x_min, y_min, x_max, y_max, score, _ = [
-                item for i in box.boxes for item in i
+                item for i in box.data for item in i
             ]  # box.boxes is a 2D array
 
             area = (x_max - x_min) * (y_max - y_min)
