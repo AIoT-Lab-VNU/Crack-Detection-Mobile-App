@@ -6,6 +6,8 @@ from kivy.lang import Builder
 from kivy.uix.screenmanager import Screen, ScreenManager, NoTransition
 from kivy.uix.camera import Camera
 from kivy.uix.popup import Popup
+from kivy.core.window import Window
+Window.size = (430, 950)
 import torch
 import cv2
 import numpy as np
