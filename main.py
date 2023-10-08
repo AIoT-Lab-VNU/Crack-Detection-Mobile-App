@@ -74,7 +74,6 @@ class CrackContainer2(Screen):
             report.text = "No crack found"
         elif len(result) == 1:
             area, score = result[0]
-            print(area, score)
             report.text = (
                 f"Crack predicted accuracy: "
                 + "%.2f" % score
@@ -99,6 +98,10 @@ class CrackContainer2(Screen):
         detected_image = self.ids["detect_img"]
         detected_image.nocache = True
         detected_image.source = ""
+
+    def remove_result(self):
+        self.report.nocache = True
+        self.report.text = ""
 
 
 class CrackContainer3(Screen):
