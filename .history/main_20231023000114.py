@@ -16,7 +16,7 @@ from kivy.uix.image import Image
 import torchvision.transforms as transforms
 from model import DetectNet
 from ultralytics import YOLO
-
+from kivymd.uix.filemanager import MDFileManager
 
 import os
 
@@ -97,7 +97,21 @@ class CrackContainer1(Screen):
     def remove_result(self):
         self.report.nocache = True
         self.report.text = ""
+    
+    def open_file_manager(self):
+        file_manager = MDFileManager(select_path=self.select_path)
+        file_manager.open()
 
+    def select_path(self, path):
+        file_manager = MDFileManager()
+        file_manager.close()
+        if path:
+            # Xử lý ảnh ở đây, ví dụ: hiển thị ảnh hoặc thực hiện xử lý
+            self.load_selected_image(path)
+    def load_selected_image(self, image_path):
+        detected_image = self.ids["detect_img"]
+        detected_image.source = image_path
+        self.remove_result()
 
 class CrackApp(App):
     def build(self):
