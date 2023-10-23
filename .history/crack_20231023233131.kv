@@ -29,7 +29,8 @@
     BoxLayout:
         orientation:"vertical"
         size: root.width, self.height
-        RelativeLayout:  
+
+        RelativeLayout:  # Sử dụng RelativeLayout để định vị logo và label
             size_hint_y: None
             height: dp(100)
             Header:
@@ -119,13 +120,8 @@
                 pos_hint: {'center_x': 0.25}  # Đặt biểu tượng ở giữa của bên trái
                 valign: 'center'
                 halign: 'center'
+                
                 on_release:
-                    camera.opacity = 0
-                    detect_img.opacity = 1
-                    self.opacity = 1
-                    camera.play = False
-                    root.compute(root.choose_img())
-
 
             Button:
                 size_hint: None, None
@@ -137,7 +133,7 @@
                     detect_img.opacity = 1
                     self.opacity = 1
                     camera.play = False
-                    root.compute(root.take_image())
+                    root.capture()
                 canvas.before:
                     Color:
                         rgba: 0.7, 0.7, 0.7, 1  # Màu xám cho nền

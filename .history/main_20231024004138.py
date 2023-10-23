@@ -110,7 +110,6 @@ class CrackContainer1(Screen):
         path = filechooser.open_file()[0]
         image = PILImage.open(path)
         return image
-
 class CrackApp(App):
     def build(self):
         sm = ScreenManager(transition=NoTransition())

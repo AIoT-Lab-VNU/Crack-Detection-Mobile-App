@@ -44,23 +44,19 @@ class CrackContainer1(Screen):
     detect_img = ObjectProperty(None)
     report = ObjectProperty(None)
     
-    def take_image(self):
+    def capture(self):
+        print("Captured!")
+
         # Take out raw pixels
         camera = self.ids["camera"]
         raw = camera.texture.pixels
         size = camera.texture.size
+        print(size)
 
         # Convert image to Tensor
         image = PILImage.frombuffer(mode="RGBA", size=size, data=raw)
         image = image.convert("RGB")
         image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
-
-        return image
-
-    def compute(self, image):
-        # print("Captured!")
-
-        # image = self.take_image()
 
         # Detect and save
         result = model(image)
@@ -105,11 +101,32 @@ class CrackContainer1(Screen):
         self.report.nocache = True
         self.report.text = ""
 
-    def choose_img(self):
-        from plyer import filechooser
-        path = filechooser.open_file()[0]
-        image = PILImage.open(path)
-        return image
+    def file_manager_open(self):
+        from kivymd.uix.filemanager import MDFileManager
+
+        self.manager = ModalView(size_hint=(1, 1), auto_dismiss=False)
+        self.file_manager = MDFileManager(
+                exit_manager=self.exit_manager,
+                select_path=self.select_path,
+                previous="",
+            )
+        self.manager.add_widget(self.file_manager)
+        self.file_manager.show(os.path.expanduser("~/Desktop"))
+        self.manager_open = True
+        self.manager.open()
+
+    def select_path(self, path):
+        self.exit_manager()
+        toast(path)
+        self.img_path.text = path
+ 
+    def toast(text):
+    from kivymd.toast.kivytoast import toast
+    toast(text)
+  
+ def exit_manager(self, *args):
+        self.manager.dismiss()
+        self.manager_open = False
 
 class CrackApp(App):
     def build(self):

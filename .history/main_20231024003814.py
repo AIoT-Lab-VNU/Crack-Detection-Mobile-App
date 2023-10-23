@@ -105,11 +105,6 @@ class CrackContainer1(Screen):
         self.report.nocache = True
         self.report.text = ""
 
-    def choose_img(self):
-        from plyer import filechooser
-        path = filechooser.open_file()[0]
-        image = PILImage.open(path)
-        return image
 
 class CrackApp(App):
     def build(self):

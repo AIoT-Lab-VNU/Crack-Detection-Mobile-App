@@ -7,6 +7,25 @@
         Rectangle:
             pos: self.pos
             size: self.size
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint: None, None
+        size: dp(430), dp(100)  # Điều chỉnh kích thước của phần logo và label
+        valign: 'middle'
+        Image:
+            size_hint_x: None
+            width: dp(80)
+            pos_hint: {'center_x': 0.3, 'center_y': 0.5}
+            center_y: self.parent.center_y
+            source: 'logo2.png'
+            valign: 'middle'
+        Label:
+            font_size: 55
+            pos_hint: {'center_x': 0.6, 'center_y': 0.5}
+            text: "AIOT LAB VN"
+            color: 1, 1, 1, 1
+            bold: True
+            valign: 'middle'
 
 <OpenCamera>:
     resolution: (430, 531)
