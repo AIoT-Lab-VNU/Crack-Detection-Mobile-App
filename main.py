@@ -7,7 +7,7 @@ from kivy.uix.screenmanager import Screen, ScreenManager, NoTransition
 from kivy.uix.camera import Camera
 from kivy.uix.popup import Popup
 from kivy.core.window import Window
-Window.size = (430, 950)
+Window.size = (430, 932)
 import torch
 import cv2
 import numpy as np
@@ -17,6 +17,7 @@ import torchvision.transforms as transforms
 from model import DetectNet
 from ultralytics import YOLO
 import os
+from kivymd.toast import toast
 
 # Loading pretrained model
 yolo = YOLO("weights/best.pt")
@@ -46,6 +47,7 @@ class CrackContainer2(Screen):
     start_cam = ObjectProperty(None)
     close_cam = ObjectProperty(None)
     detect_img = ObjectProperty(None)
+    store = ObjectProperty(None)
     report = ObjectProperty(None)
 
     def capture(self):
@@ -95,7 +97,12 @@ class CrackContainer2(Screen):
                     + " cm²\n\n"
                 )
             report.text = text
-
+    def file_manager_open(self):
+        from plyer import filechooser
+        path = filechooser.open_file()[0] 
+        # this method returns a list with the first index
+        # being the path of the file selected
+        toast(path)
     def remove_img(self):
         detected_image = self.ids["detect_img"]
         detected_image.nocache = True
@@ -124,4 +131,4 @@ class CrackApp(App):
 
 
 if __name__ == "__main__":
-    CrackApp().run()
+    CrackApp().run()    
