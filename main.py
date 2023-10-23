@@ -47,22 +47,25 @@ class CrackContainer2(Screen):
     start_cam = ObjectProperty(None)
     close_cam = ObjectProperty(None)
     detect_img = ObjectProperty(None)
-    store = ObjectProperty(None)
     report = ObjectProperty(None)
 
-    def capture(self):
-        print("Captured!")
-
+    def take_image(self):
         # Take out raw pixels
         camera = self.ids["camera"]
         raw = camera.texture.pixels
         size = camera.texture.size
-        print(size)
 
         # Convert image to Tensor
         image = PILImage.frombuffer(mode="RGBA", size=size, data=raw)
         image = image.convert("RGB")
         image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
+
+        return image
+
+    def compute(self, image):
+        # print("Captured!")
+
+        # image = self.take_image()
 
         # Detect and save
         result = model(image)
@@ -97,12 +100,7 @@ class CrackContainer2(Screen):
                     + " cm²\n\n"
                 )
             report.text = text
-    def file_manager_open(self):
-        from plyer import filechooser
-        path = filechooser.open_file()[0] 
-        # this method returns a list with the first index
-        # being the path of the file selected
-        toast(path)
+
     def remove_img(self):
         detected_image = self.ids["detect_img"]
         detected_image.nocache = True
@@ -112,9 +110,11 @@ class CrackContainer2(Screen):
         self.report.nocache = True
         self.report.text = ""
 
-
-class CrackContainer3(Screen):
-    pass
+    def choose_img(self):
+        from plyer import filechooser
+        path = filechooser.open_file()[0]
+        image = PILImage.open(path)
+        return image
 
 
 class CrackApp(App):
