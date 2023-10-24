@@ -220,13 +220,18 @@
                 color: 0, 0, 0, 1  # Màu chữ #FFFFFF
                 bold: True
                 halign: 'left'  
-        #Result detected on screen (area, score)
-            Label:
-                id: report
-                size_hint: None, None
-                pos_hint: {"center_x":0.44, "center_y":0.5}
-                font_size: 35
-                color: 0, 0, 0, 1  # Màu chữ #FFFFFF  
+            ScrollView:
+                size_hint: (0.9, None)
+                height: 180
+                pos_hint: {'center_x': 0.55}
+            #Result detected on screen (area, score)
+                Label:
+                    id: report
+                    size_hint: None, None
+                    size: self.texture_size
+                    pos_hint: {"center_x":1, "center_y":0.5}
+                    font_size: 18
+                    color: 0, 0, 0, 1  # Màu chữ #FFFFFF  
         RelativeLayout:
             orientation: 'horizontal'
             size_hint_y: None
