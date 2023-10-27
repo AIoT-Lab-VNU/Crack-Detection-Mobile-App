@@ -68,25 +68,27 @@ class CrackContainer1(Screen):
 
         if len(result) == 0:
             report.text = "No crack found"
+        elif len(result) == 1:
+            area, score = result[0]
+            report.text = (
+                f"Crack predicted accuracy: "
+                + "%.2f" % score
+                + " %\nThe area of crack is: "
+                + "%.2f" % area
+                + " cm²"
+            )
         else:
             text = ""
             for i, out in enumerate(result):
-                if len(out) >= 4:
-                    area, score, length, width = out
-                else:
-                    print(f"Warning: Expected 4 values in output, but got {len(out)}")
-                    continue  # Skip this iteration and move to the next one
-
-                area /= 10000  # Convert area from cm² to m²
-
+                area, score = out
                 text += (
-                    f"Crack {i+1} predicted accuracy: {score:.2f} %\n"
-                    + f"The area of crack {i+1} is: {area:.4f} m²\n\n"  # Area is already in square meters
-                    + f"The length of crack {i+1} is: {length/100:.2f} m\n\n"  # Convert length from cm to m
-                    + f"The width of crack {i+1} is: {width/100:.2f} m\n\n"  # Convert width from cm to m
+                    f"Crack {i+1} predicted accuracy: "
+                    + "%.2f" % score
+                    + f" %\nThe area of crack {i+1} is: "
+                    + "%.2f" % area
+                    + " cm²\n\n"
                 )
             report.text = text
-
 
     def remove_img(self):
         detected_image = self.ids["detect_img"]

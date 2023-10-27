@@ -37,24 +37,20 @@ class CrackContainer1(Screen):
     close_cam = ObjectProperty(None)
     detect_img = ObjectProperty(None)
     report = ObjectProperty(None)
-    
-    def take_image(self):
+
+    def capture(self):
+        print("Captured!")
+
         # Take out raw pixels
         camera = self.ids["camera"]
         raw = camera.texture.pixels
         size = camera.texture.size
+        print(size)
 
         # Convert image to Tensor
         image = PILImage.frombuffer(mode="RGBA", size=size, data=raw)
         image = image.convert("RGB")
         image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
-
-        return image
-
-    def compute(self, image):
-        # print("Captured!")
-
-        # image = self.take_image()
 
         # Detect and save
         result = model(image)
