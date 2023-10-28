@@ -63,32 +63,7 @@ class CrackContainer1(Screen):
         detected_image = self.ids["detect_img"]
         detected_image.source = save_dir
 
-        # Print out result
-        report = self.ids["report"]
 
-        if len(result) == 0:
-            report.text = "No crack found"
-        elif len(result) == 1:
-            area, score = result[0]
-            report.text = (
-                f"Crack predicted accuracy: "
-                + "%.2f" % score
-                + " %\nThe area of crack is: "
-                + "%.2f" % area
-                + " cm²"
-            )
-        else:
-            text = ""
-            for i, out in enumerate(result):
-                area, score = out
-                text += (
-                    f"Crack {i+1} predicted accuracy: "
-                    + "%.2f" % score
-                    + f" %\nThe area of crack {i+1} is: "
-                    + "%.2f" % area
-                    + " cm²\n\n"
-                )
-            report.text = text
 
 
     def remove_img(self):

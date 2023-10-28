@@ -125,8 +125,7 @@
                 valign: 'center'
                 halign: 'center'
                 on_release:
-                    root.remove_img()
-                    root.remove_result()               
+                    
                     camera.opacity = 0
                     detect_img.opacity = 1
                     self.opacity = 1
@@ -140,12 +139,10 @@
                 pos_hint: {'center_x': 0.5, 'center_y': 0.5}
                 id: start_cam
                 on_release:
-                    root.remove_img()
-                    root.remove_result()
                     camera.opacity = 0
                     detect_img.opacity = 1
                     self.opacity = 1
-                    camera.play = True
+                    camera.play = False
                     root.compute(root.take_image())
                 canvas.before:
                     Color:

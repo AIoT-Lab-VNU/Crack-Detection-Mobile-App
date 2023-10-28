@@ -12,8 +12,8 @@
     resolution: (430, 531)
     play: True
     #keep_ratio: True
-    orientation: 'horizontal'
-    angle: 0
+    orientation: 'vertical'
+    angle: 90
 
 <CrackContainer1>:
     start_cam: start_cam
@@ -77,7 +77,6 @@
             orientation: 'vertical'
             size_hint_y: None
             size: 430, 200
-            padding: 10
             spacing: 20
             canvas.before:
                 Color:
@@ -88,7 +87,7 @@
             Label:
                 text: "Report result:"
                 size_hint: None, None
-                pos_hint: {'center_y': 0.5}
+                pos_hint: {'center_y': 0.75}
                 size: 430, 40
                 font_size: 40
                 color: 0, 0, 0, 1  # Màu chữ #FFFFFF
@@ -98,14 +97,13 @@
                 size_hint: (0.9, None)
                 height: 180
                 pos_hint: {'center_x': 0.55}
-            #Result detected on screen (area, score)
+        #Result detected on screen (area, score)
                 Label:
                     id: report
                     size_hint: None, None
-                    size: self.texture_size
-                    pos_hint: {"center_x":1, "center_y":0.5}
-                    font_size: 30
-                    color: 0, 0, 0, 1  # Màu chữ #FFFFFF   
+                    pos_hint: {"center_x":0.50, "center_y":0.5}
+                    font_size: 35
+                    color: 0, 0, 0, 1  # Màu chữ #FFFFFF  
         RelativeLayout:
             orientation: 'horizontal'
             size_hint_y: None
@@ -125,8 +123,6 @@
                 valign: 'center'
                 halign: 'center'
                 on_release:
-                    root.remove_img()
-                    root.remove_result()               
                     camera.opacity = 0
                     detect_img.opacity = 1
                     self.opacity = 1
@@ -140,12 +136,10 @@
                 pos_hint: {'center_x': 0.5, 'center_y': 0.5}
                 id: start_cam
                 on_release:
-                    root.remove_img()
-                    root.remove_result()
                     camera.opacity = 0
                     detect_img.opacity = 1
                     self.opacity = 1
-                    camera.play = True
+                    camera.play = False
                     root.compute(root.take_image())
                 canvas.before:
                     Color:

@@ -12,8 +12,8 @@
     resolution: (430, 531)
     play: True
     #keep_ratio: True
-    orientation: 'horizontal'
-    angle: 0
+    orientation: 'vertical'
+    angle: 90
 
 <CrackContainer1>:
     start_cam: start_cam
@@ -104,7 +104,7 @@
                     size_hint: None, None
                     size: self.texture_size
                     pos_hint: {"center_x":1, "center_y":0.5}
-                    font_size: 30
+                    font_size: 25
                     color: 0, 0, 0, 1  # Màu chữ #FFFFFF   
         RelativeLayout:
             orientation: 'horizontal'
@@ -125,8 +125,6 @@
                 valign: 'center'
                 halign: 'center'
                 on_release:
-                    root.remove_img()
-                    root.remove_result()               
                     camera.opacity = 0
                     detect_img.opacity = 1
                     self.opacity = 1
@@ -140,12 +138,10 @@
                 pos_hint: {'center_x': 0.5, 'center_y': 0.5}
                 id: start_cam
                 on_release:
-                    root.remove_img()
-                    root.remove_result()
                     camera.opacity = 0
                     detect_img.opacity = 1
                     self.opacity = 1
-                    camera.play = True
+                    camera.play = False
                     root.compute(root.take_image())
                 canvas.before:
                     Color:

@@ -69,24 +69,36 @@ class CrackContainer1(Screen):
         if len(result) == 0:
             report.text = "No crack found"
         elif len(result) == 1:
-            area, score = result[0]
+            area_m2, score, width_m, height_m = result[0]
             report.text = (
                 f"Crack predicted accuracy: "
                 + "%.2f" % score
                 + " %\nThe area of crack is: "
-                + "%.2f" % area
-                + " cm²"
+                + "%.2f" % area_m2
+                + " m²\n"
+                + "The width of the crack is: "
+                + "%.2f" % width_m
+                + " m\n"
+                + "The height of the crack is: "
+                + "%.2f" % height_m
+                + " m"
             )
         else:
             text = ""
             for i, out in enumerate(result):
-                area, score = out
+                area_m2, score, width_m, height_m = out
                 text += (
-                    f"Crack {i+1} predicted accuracy: "
+                    f"Crack predicted accuracy: "
                     + "%.2f" % score
-                    + f" %\nThe area of crack {i+1} is: "
-                    + "%.2f" % area
-                    + " cm²\n\n"
+                    + f" %\nThe area of crack is: "
+                    + "%.2f" % area_m2
+                    + " m²\n"
+                    + "The width of the crack is: "
+                    + "%.2f" % width_m
+                    + " m\n"
+                    + "The height of the crack is: "
+                    + "%.2f" % height_m
+                    + " m\n\n"
                 )
             report.text = text
 
