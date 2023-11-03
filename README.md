@@ -1,1 +1,0 @@
-# Crack-Detection-Mobile-App
