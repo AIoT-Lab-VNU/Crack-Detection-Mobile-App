@@ -1,1 +1,0 @@
-# This is React Native source code
