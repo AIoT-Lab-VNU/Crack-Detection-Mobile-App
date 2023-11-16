@@ -101,7 +101,7 @@ android {
         release{
             storeFile file('my-release-key.keystore')
             storePassword 'aiotlabvn'
-            keyAlias 'aiotlabvn'
+            keyAlias 'my-key-alias'
             keyPassword 'aiotlabvn'
         }
     }
