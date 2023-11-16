@@ -9,8 +9,9 @@ jobs:
     steps:
       - name: cd to project
         run: |
-          cd reactapp
+          ls && cd reactapp
   install-and-test:
+    needs: pre
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
