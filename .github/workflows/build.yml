@@ -29,7 +29,7 @@ jobs:
           cd reactapp && npm install
       - name: Build Android Release
         run: |
-          cd reactapp && cd android && ./gradlew assembleRelease
+          cd reactapp && cd android && chmod +x ./gradlew && ./gradlew assembleRelease
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:
