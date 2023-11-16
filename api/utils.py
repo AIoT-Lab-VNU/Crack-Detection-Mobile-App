@@ -14,7 +14,7 @@ def decode_image(image_dir):
     #     print("Exception: ", ex)
     #     return ''
     with open(image_dir, 'rb') as image_file:
-        base64_bytes = base64.b64encode(image_file.read())
+        base64_bytes = base64.b64encode(image_file.read()).decode('utf-8')
         # print(base64_bytes)
         return base64_bytes
 

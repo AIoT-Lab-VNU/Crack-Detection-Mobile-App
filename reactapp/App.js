@@ -3,6 +3,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Home from './views/home/home.js';
 import Detect from './views/detect/detect.js';
+import Result from './views/result/result.js';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -16,6 +17,7 @@ export default function App() {
       }}>
         <Stack.Screen name="Home" options={{headerShown: false}} component={Home} />
         <Stack.Screen name="Detect" options={{headerShown: false}} component={Detect} />
+        <Stack.Screen name="Result" options={{headerShown: false}} component={Result} />
       </Stack.Navigator>
     </NavigationContainer>
     // <Home />
