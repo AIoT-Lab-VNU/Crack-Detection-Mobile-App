@@ -5,6 +5,7 @@ on:
       - main
 jobs:
   pre:
+    runs-on: ubuntu-latest
     steps:
       - name: cd to project
         run: |
