@@ -9,8 +9,8 @@ export default function Result() {
     for (let count = 0; count < probResult.length; count++) {
         renderedResults.push(
             <View style={styles.resultSentence} key={count}>
-                <Text>Crack predicted accuracy: <Text style={{ fontWeight: 'bold' }}>{probResult[count][1]}%</Text></Text>
-                <Text>The area of crack is: <Text style={{ fontWeight: 'bold' }}>{probResult[count][0]}</Text></Text>
+                <Text style={{ fontSize: 18}}>Crack predicted accuracy: <Text style={{ fontWeight: 'bold' }}>{probResult[count][1]}%</Text></Text>
+                <Text  style={{ fontSize: 18}}>The area of crack is: <Text style={{ fontWeight: 'bold' }}>{probResult[count][0]}</Text></Text>
             </View>
         )
     }
