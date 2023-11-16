@@ -46,7 +46,8 @@ export default function Detect() {
             // console.log('Captured Image:', data);
             try {
                 console.log('Sending request')
-                axios.post('http://10.0.2.2:5000/process-image', JSON.stringify(data), {
+                // axios.post('https://10.0.2.2:5000/process-image', JSON.stringify(data), {
+                axios.post('https://crackapi.aiotlab.vn/process-image', JSON.stringify(data), {
                     headers: {
                         'Content-Type': 'application/json',
                     }
@@ -96,7 +97,8 @@ export default function Detect() {
             const base64Image = await convertImageToBase64(result.assets[0].uri);
             try {
                 console.log('Sending request')
-                axios.post('http://10.0.2.2:5000/process-selected-image', JSON.stringify(base64Image), {
+                // axios.post('http://10.0.2.2:5000/process-selected-image', JSON.stringify(base64Image), {
+                axios.post('https://crackapi.aiotlab.vn/process-selected-image', JSON.stringify(base64Image), {
                     headers: {
                         'Content-Type': 'application/json',
                     }
